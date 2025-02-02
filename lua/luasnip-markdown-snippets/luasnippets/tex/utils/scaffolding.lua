@@ -5,52 +5,46 @@
 local ls = require("luasnip")
 local s = ls.snippet
 local sn = ls.snippet_node
-local isn = ls.indent_snippet_node
 local t = ls.text_node
 local i = ls.insert_node
 local f = ls.function_node
 local c = ls.choice_node
 local d = ls.dynamic_node
-local r = ls.restore_node
-local events = require("luasnip.util.events")
-local ai = require("luasnip.nodes.absolute_indexer")
-local extras = require("luasnip.extras")
-local l = extras.lambda
-local rep = extras.rep
-local p = extras.partial
-local m = extras.match
-local n = extras.nonempty
-local dl = extras.dynamic_lambda
-local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
-local conds = require("luasnip.extras.expand_conditions")
 local postfix = require("luasnip.extras.postfix").postfix
-local types = require("luasnip.util.types")
-local parse = require("luasnip.util.parser").parse_snippet
-local ms = ls.multi_snippet
 local autosnippet = ls.extend_decorator.apply(s, { snippetType = "autosnippet" })
 
 M = {}
 
 -- postfix helper function - generates dynamic node
 local generate_postfix_dynamicnode = function(_, parent, _, user_arg1, user_arg2)
-    local capture = parent.snippet.env.POSTFIX_MATCH
-    if #capture > 0 then
-        return sn(nil, fmta([[
+	local capture = parent.snippet.env.POSTFIX_MATCH
+	if #capture > 0 then
+		return sn(
+			nil,
+			fmta(
+				[[
         <><><><>
         ]],
-        {t(user_arg1), t(capture), t(user_arg2), i(0)}))
-    else
-        local visual_placeholder = parent.snippet.env.SELECT_RAW
-        return sn(nil, fmta([[
+				{ t(user_arg1), t(capture), t(user_arg2), i(0) }
+			)
+		)
+	else
+		local visual_placeholder = parent.snippet.env.SELECT_RAW
+		return sn(
+			nil,
+			fmta(
+				[[
         <><><><>
         ]],
-        {t(user_arg1), i(1, visual_placeholder), t(user_arg2), i(0)}))
-    end
+				{ t(user_arg1), i(1, visual_placeholder), t(user_arg2), i(0) }
+			)
+		)
+	end
 end
 
 -- visual util to add insert node - thanks ejmastnak!
-M.get_visual = function(args, parent)
+M.get_visual = function(parent)
 	if #parent.snippet.env.SELECT_RAW > 0 then
 		return sn(nil, i(1, parent.snippet.env.SELECT_RAW))
 	else -- If SELECT_RAW is empty, return a blank insert node
@@ -67,17 +61,20 @@ M.auto_backslash_snippet = function(context, opts)
 	context.dscr = context.dscr or (context.trig .. "with automatic backslash")
 	context.name = context.name or context.trig
 	context.docstring = context.docstring or ([[\]] .. context.trig)
-    context.trigEngine = "ecma"
-    context.trig = "(?<!\\\\)" .. "(" .. context.trig .. ")"
-	return autosnippet(context,
-    fmta([[
+	context.trigEngine = "ecma"
+	context.trig = "(?<!\\\\)" .. "(" .. context.trig .. ")"
+	return autosnippet(
+		context,
+		fmta(
+			[[
     \<><>
     ]],
-    { f(function(_, snip)
-        return snip.captures[1]
-    end),
-    i(0) }),
-    opts)
+			{ f(function(_, snip)
+				return snip.captures[1]
+			end), i(0) }
+		),
+		opts
+	)
 end
 
 -- Auto symbol
@@ -90,12 +87,12 @@ M.symbol_snippet = function(context, command, opts)
 	context.name = context.name or command:gsub([[\]], "")
 	context.docstring = context.docstring or (command .. [[{0}]])
 	context.wordTrig = context.wordTrig or false
-    j, _ = string.find(command, context.trig)
-    if j == 2 then -- command always starts with backslash
-        context.trigEngine = "ecma"
-        context.trig = "(?<!\\\\)" .. "(" .. context.trig .. ")"
-        context.hidden = true
-    end
+	local j, _ = string.find(command, context.trig)
+	if j == 2 then -- command always starts with backslash
+		context.trigEngine = "ecma"
+		context.trig = "(?<!\\\\)" .. "(" .. context.trig .. ")"
+		context.hidden = true
+	end
 	return autosnippet(context, t(command), opts)
 end
 
@@ -118,8 +115,9 @@ M.single_command_snippet = function(context, command, opts, ext)
 	if ext.label == true then
 		docstring = [[{]] .. [[<1>]] .. [[}]] .. [[\label{(]] .. ext.short .. [[:<2>)?}]] .. [[<0>]]
 		ext.short = ext.short or command
-		lnode =
-			c(2 + (offset or 0), { t(""), sn(
+		lnode = c(2 + (offset or 0), {
+			t(""),
+			sn(
 				nil,
 				fmta(
 					[[
@@ -127,15 +125,16 @@ M.single_command_snippet = function(context, command, opts, ext)
         ]],
 					{ t(ext.short), i(1) }
 				)
-			) })
+			),
+		})
 	end
 	context.docstring = context.docstring or (command .. docstring)
-    j, _ = string.find(command, context.trig)
-    if j == 2 then 
-        context.trigEngine = "ecma"
-        context.trig = "(?<!\\\\)" .. "(" .. context.trig .. ")"
-        context.hidden = true
-    end
+	local j, _ = string.find(command, context.trig)
+	if j == 2 then
+		context.trigEngine = "ecma"
+		context.trig = "(?<!\\\\)" .. "(" .. context.trig .. ")"
+		context.hidden = true
+	end
 	-- stype = ext.stype or s
 	return s(
 		context,
@@ -144,8 +143,8 @@ M.single_command_snippet = function(context, command, opts, ext)
 	)
 end
 
-M.postfix_snippet = function (context, command, opts)
-    opts = opts or {}
+M.postfix_snippet = function(context, command, opts)
+	opts = opts or {}
 	if not context.trig then
 		error("context doesn't include a `trig` key which is mandatory", 2)
 	end
@@ -154,15 +153,19 @@ M.postfix_snippet = function (context, command, opts)
 	end
 	context.dscr = context.dscr
 	context.name = context.name or context.dscr
-    context.docstring = command.pre .. [[(POSTFIX_MATCH|VISUAL|<1>)]] .. command.post
-    context.match_pattern = [[[%w%.%_%-%"%']*$]]
-    j, _ = string.find(command.pre, context.trig)
-    if j == 2 then
-        context.trigEngine = "ecma"
-        context.trig = "(?<!\\\\)" .. "(" .. context.trig .. ")"
-        context.hidden = true
-    end
-    return postfix(context, {d(1, generate_postfix_dynamicnode, {}, { user_args = {command.pre, command.post} })}, opts)
+	context.docstring = command.pre .. [[(POSTFIX_MATCH|VISUAL|<1>)]] .. command.post
+	context.match_pattern = [[[%w%.%_%-%"%']*$]]
+	local j, _ = string.find(command.pre, context.trig)
+	if j == 2 then
+		context.trigEngine = "ecma"
+		context.trig = "(?<!\\\\)" .. "(" .. context.trig .. ")"
+		context.hidden = true
+	end
+	return postfix(
+		context,
+		{ d(1, generate_postfix_dynamicnode, {}, { user_args = { command.pre, command.post } }) },
+		opts
+	)
 end
 
 return M

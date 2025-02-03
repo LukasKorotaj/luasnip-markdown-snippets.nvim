@@ -67,17 +67,17 @@ end
 
 M = {
 	-- Math modes
-	autosnippet(
+	s(
 		{ trig = "mk", name = "$..$", dscr = "inline math" },
 		fmta(
 			[[
     $<>$<>
     ]],
 			{ i(1), i(0) }
-		)({ snippetType = "snippet" })
+		)
 	),
 
-	autosnippet(
+	s(
 		{ trig = "dm", name = "\\[...\\]", dscr = "display math" },
 		fmta(
 			[[ 
@@ -86,11 +86,10 @@ M = {
     .\]
     <>]],
 			{ i(1), i(0) }
-		),
-		{ condition = line_begin, show_condition = line_begin }
+		)
 	),
 
-	autosnippet(
+	s(
 		{ trig = "ali", name = "align(|*|ed)", dscr = "align math" },
 		fmta(
 			[[ 
@@ -99,22 +98,20 @@ M = {
     .\end{align<>}
     ]],
 			{ c(1, { t("*"), t(""), t("ed") }), i(2), rep(1) }
-		), -- in order of least-most used
-		{ condition = line_begin, show_condition = line_begin }
+		) -- in order of least-most used
 	),
 
-	autosnippet(
+	s(
 		{ trig = "==", name = "&= align", dscr = "&= align" },
 		fmta(
 			[[
     &<> <> \\
     ]],
 			{ c(1, { t("="), t("\\leq"), i(1) }), i(2) }
-		),
-		{ condition = tex.in_align, show_condition = tex.in_align }
+		)
 	),
 
-	autosnippet(
+	s(
 		{ trig = "gat", name = "gather(|*|ed)", dscr = "gather math" },
 		fmta(
 			[[ 
@@ -123,11 +120,10 @@ M = {
     .\end{gather<>}
     ]],
 			{ c(1, { t("*"), t(""), t("ed") }), i(2), rep(1) }
-		),
-		{ condition = line_begin, show_condition = line_begin }
+		)
 	),
 
-	autosnippet(
+	s(
 		{ trig = "eqn", name = "equation(|*)", dscr = "equation math" },
 		fmta(
 			[[
@@ -136,8 +132,7 @@ M = {
     .\end{equation<>}
     ]],
 			{ c(1, { t("*"), t("") }), i(2), rep(1) }
-		),
-		{ condition = line_begin, show_condition = line_begin }
+		)
 	),
 
 	-- Matrices and Cases

@@ -25,12 +25,32 @@ use {
 },
 ```
 
+Add these lines to `~/.config/nvim/queries/markdown_inline/highlights.scm`:
+
+```
+;;; LaTeX-related captures
+(latex_block) @latex_block
+(latex_span_delimiter) @latex_delimiter
+```
+
+Enable autosnippets in you `init.lua` file: 
+```lua
+config = function()
+    local luasnip = require 'luasnip'
+
+    luasnip.setup {
+	enable_autosnippets = true,
+    }
+end,
+```
+If you are using [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) don't forget to have only one `luasnip.setup`. The second one is hidden in `cmp_luasnip`.
+
 ## Snippets
 See [snippets.md](./snippets.md) for the time being.
 
 ## Development Plans
 
-The snippets arent integrated into markdown perfectly so I will fix them as I write math in markdown.
+The snippets arent integrated into markdown perfectly so I will fix them as I write math in markdown. Also planning a feature to overwrite and add new snippets in the plugin config.
 
 ## Acknowledgements (from evesdropper)
 Some similar snippet resources:

@@ -81,9 +81,9 @@ M = {
 		{ trig = "dm", name = "\\[...\\]", dscr = "display math" },
 		fmta(
 			[[ 
-    \[ 
+    $$ 
     <>
-    .\]
+    $$
     <>]],
 			{ i(1), i(0) }
 		)

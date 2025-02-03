@@ -1,4 +1,4 @@
-# LuaSnip-LaTeX-Snippets
+# LuaSnip-Markdown-Snippets
 
 A set of preconfigured snippets for markdown for the snippet engine [LuaSnip](https://github.com/L3MON4D3/LuaSnip).
 

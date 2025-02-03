@@ -50,7 +50,7 @@ See [snippets.md](./snippets.md) for the time being.
 
 ## Development Plans
 
-The snippets arent integrated into markdown perfectly so I will fix them as I write math in markdown. Also planning a feature to overwrite and add new snippets in the plugin config.
+The snippets aren't integrated into markdown perfectly so I will fix them as I write math in markdown. Also planning a feature to overwrite and add new snippets in the plugin config.
 
 ## Acknowledgements (from evesdropper)
 Some similar snippet resources:

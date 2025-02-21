@@ -46,7 +46,7 @@ end,
 If you are using [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) don't forget to have only one `luasnip.setup`. The second one is hidden in `cmp_luasnip`.
 
 ## Snippets
-See [snippets.md](./snippets.md) for the time being.
+See [SNIPPET_DOC.md](./SNIPPETS_DOC.md) for the time being.
 
 ## Development Plans
 

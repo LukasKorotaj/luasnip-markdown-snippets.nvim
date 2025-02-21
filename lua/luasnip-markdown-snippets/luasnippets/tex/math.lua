@@ -78,7 +78,7 @@ M = {
 	),
 
 	s(
-		{ trig = "dm", name = "\\[...\\]", dscr = "display math" },
+		{ trig = "dm", name = "$$..$$", dscr = "display math" },
 		fmta(
 			[[ 
     $$ 

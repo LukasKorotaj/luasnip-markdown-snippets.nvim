@@ -114,15 +114,38 @@ M = {
 		{ condition = tex.in_math, show_condition = tex.in_math }
 	),
 
+	--	autosnippet(
+	--		{ trig = "lim", name = "lim(sup|inf)", dscr = "lim(sup|inf)" },
+	--		fmta(
+	--			[[
+	--    \lim<><><>
+	--    ]],
+	--
+	--			{
+	--				c(1, { t(""), t("sup"), t("inf") }),
+	--				c(2, { t(""), fmta([[_{<> \to <>}]], { i(1, "n"), i(2, "\\infty") }) }),
+	--				i(0),
+	--			}
+	--		),
+	--		{ condition = tex.in_math, show_condition = tex.in_math }
+	--	),
+
 	autosnippet(
 		{ trig = "lim", name = "lim(sup|inf)", dscr = "lim(sup|inf)" },
 		fmta(
-			[[ 
-    \lim<><><>
-    ]],
+			[[
+	\lim<><><>
+	    ]],
 			{
 				c(1, { t(""), t("sup"), t("inf") }),
-				c(2, { t(""), fmta([[_{<> \to <>}]], { i(1, "n"), i(2, "\\infty") }) }),
+				d(2, function(args)
+					local choice = args[1][1] -- Gets the selected value from the first choice node
+					if choice == "sup" or choice == "inf" then
+						return sn(nil, { t("_{"), i(1, "n"), t(" \\to "), i(2, "\\infty"), t("}") })
+					else
+						return sn(nil, { t("") }) -- Empty node when no choice is made
+					end
+				end, { 1 }), -- The function depends on the first placeholder
 				i(0),
 			}
 		),
@@ -319,7 +342,7 @@ local symbol_specs = {
 	["-~"] = { context = { name = "⋍" }, command = [[\backsimeq]] },
 	["-="] = { context = { name = "≡" }, command = [[\equiv]] },
 	["=~"] = { context = { name = "≅" }, command = [[\cong]] },
-	[":="] = { context = { name = "≔" }, command = [[\definedas]] },
+	[":="] = { context = { name = "≔" }, command = [[\coloneqq]] },
 	["**"] = { context = { name = "·", priority = 100 }, command = [[\cdot]] },
 	xx = { context = { name = "×" }, command = [[\times]] },
 	["!+"] = { context = { name = "⊕" }, command = [[\oplus]] },

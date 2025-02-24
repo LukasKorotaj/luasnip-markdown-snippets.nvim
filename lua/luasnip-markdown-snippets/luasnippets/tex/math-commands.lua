@@ -131,27 +131,20 @@ M = {
 	--	),
 
 	autosnippet(
-		{ trig = "lim", name = "lim(sup|inf)", dscr = "lim(sup|inf)" },
+		{ trig = "lim", name = "lim", dscr = "Limit expression" },
 		fmta(
 			[[
-	\lim<><><>
-	    ]],
+\lim<>_{<> \to <>} <>
+    ]],
 			{
-				c(1, { t(""), t("sup"), t("inf") }),
-				d(2, function(args)
-					local choice = args[1][1] -- Gets the selected value from the first choice node
-					if choice == "sup" or choice == "inf" then
-						return sn(nil, { t("_{"), i(1, "n"), t(" \\to "), i(2, "\\infty"), t("}") })
-					else
-						return sn(nil, { t("") }) -- Empty node when no choice is made
-					end
-				end, { 1 }), -- The function depends on the first placeholder
-				i(0),
+				i(1),
+				i(2, "n"), -- Cursor starts here (default "n")
+				i(3, "\\infty"), -- Next jump point (default "\infty")
+				i(0), -- Final jump point (trailing expression)
 			}
 		),
 		{ condition = tex.in_math, show_condition = tex.in_math }
 	),
-
 	autosnippet(
 		{ trig = "sum", name = "summation", dscr = "summation" },
 		fmta(

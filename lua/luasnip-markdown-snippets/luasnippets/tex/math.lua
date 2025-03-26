@@ -111,7 +111,7 @@ M = {
 		{ trig = "mk", name = "$..$", dscr = "inline math" },
 		fmta(
 			[[
-    $<> $<>
+    $<>$<>
     ]],
 			{ i(1), i(0) }
 		)

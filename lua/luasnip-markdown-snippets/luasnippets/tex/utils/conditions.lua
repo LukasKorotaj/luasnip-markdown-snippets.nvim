@@ -2,6 +2,8 @@ local ts = vim.treesitter
 
 local M = {}
 
+M.get_manual_math_mode = nil
+
 local function in_text_block()
 	local bufnr = vim.api.nvim_get_current_buf()
 	local cursor = vim.api.nvim_win_get_cursor(0)
@@ -35,6 +37,10 @@ local function in_text_block()
 end
 
 function M.in_math()
+	if in_text_block() then
+		return false
+	end
+
 	local bufnr = vim.api.nvim_get_current_buf()
 	local cursor = vim.api.nvim_win_get_cursor(0)
 	local row, col = unpack(cursor)
@@ -61,12 +67,15 @@ function M.in_math()
 	for _, node in query:iter_captures(root, bufnr, row, row + 1) do
 		local sr, sc, er, ec = node:range()
 		if sr <= row and row <= er then
-			local valid_col = (row == sr and col >= sc) or (row == er and col <= ec) or (row > sr and row < er)
+			local same_row = sr == er
+			local valid_col
+			if same_row then
+				valid_col = col >= sc and col <= ec
+			else
+				valid_col = (row == sr and col >= sc) or (row == er and col <= ec) or (row > sr and row < er)
+			end
 
 			if valid_col then
-				if in_text_block() then
-					return false
-				end
 				return true
 			end
 		end

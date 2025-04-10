@@ -77,7 +77,7 @@ This document provides an overview of the snippets available for Markdown files 
 ## 3. Fraction Snippets
 
 ### fraction (general)
-- **Trigger**: `//`
+- **Trigger**: `;;`
 - **Type**: Autosnippet  
 - **Description**: A general fraction snippet.  
 - **Output**:
@@ -89,7 +89,7 @@ This document provides an overview of the snippets available for Markdown files 
 ### fraction (auto fraction 1)
 - **Trigger**:  
   ```
-  ((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)\/
+  ((\\d+)|(\\d*)(\\\\)?([A-Za-z]+)((\\^|_)(\\{\\d+\\}|\\d))*);
   ```
 - **Type**: Autosnippet  
 - **Description**: Auto-detects a fraction from the captured pattern (auto fraction 1).  
@@ -100,7 +100,7 @@ This document provides an overview of the snippets available for Markdown files 
   The first placeholder is filled with the captured text from the trigger.
 
 ### fraction (auto fraction 2)
-- **Trigger**: `(^.*\))\/`
+- **Trigger**: `(^.*\\\\);`
 - **Type**: Autosnippet  
 - **Description**: Auto-detects a fraction using a different pattern (auto fraction 2).  
 - **Output**:  

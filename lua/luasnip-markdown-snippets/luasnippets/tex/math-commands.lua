@@ -82,7 +82,7 @@ M = {
 
 	-- fractions
 	autosnippet(
-		{ trig = "//", name = "fraction", dscr = "fraction (general)" },
+		{ trig = ";;", name = "fraction", dscr = "fraction (general)" },
 		fmta(
 			[[
     \frac{<>}{<>}<>
@@ -93,7 +93,7 @@ M = {
 	),
 	autosnippet(
 		{
-			trig = "((\\d+)|(\\d*)(\\\\)?([A-Za-z]+)((\\^|_)(\\{\\d+\\}|\\d))*)\\/",
+			trig = "((\\d+)|(\\d*)(\\\\)?([A-Za-z]+)((\\^|_)(\\{\\d+\\}|\\d))*);",
 			name = "fraction",
 			dscr = "auto fraction 1",
 			trigEngine = "ecma",
@@ -109,7 +109,7 @@ M = {
 		{ condition = tex.in_math, show_condition = tex.in_math }
 	),
 	autosnippet(
-		{ trig = "(^.*\\))/", name = "fraction", dscr = "auto fraction 2", trigEngine = "ecma" },
+		{ trig = "(^.*\\\\);", name = "fraction", dscr = "auto fraction 2", trigEngine = "ecma" },
 		{ d(1, generate_fraction) },
 		{ condition = tex.in_math, show_condition = tex.in_math }
 	),

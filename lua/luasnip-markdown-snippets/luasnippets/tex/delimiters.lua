@@ -20,10 +20,10 @@ local scaffolding = require("luasnip-markdown-snippets.luasnippets.tex.utils.sca
 -- brackets
 local brackets = {
 	a = { "\\langle", "\\rangle" },
-	A = { "Angle", "Angle" },
-	b = { "brack", "brack" },
-	B = { "Brack", "Brack" },
-	c = { "brace", "brace" },
+	A = { "\\langle", "\\rangle" },
+	b = { "[", "]" },
+	B = { "\\llbracket", "\\rrbracket" },
+	c = { "\\{", "\\}" },
 	m = { "|", "|" },
 	p = { "(", ")" },
 }
